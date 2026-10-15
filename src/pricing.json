@@ -1,0 +1,18 @@
+{
+  "_note": "DRAFT. Package limits are placeholders and every price is null until shud-platform#37 and shud-ai-service#19 are approved; the calculator then shows the package and 'Price after consultation'. Keep packages ordered from smallest to largest: the first one that fits wins.",
+  "currency": "EUR",
+  "answersPerConversation": null,
+  "markupPercent": null,
+  "packages": [
+    { "id": "start", "name": "Start", "maxProducts": 500, "maxConversations": 500, "maxLanguages": 1, "priceMonthly": null },
+    { "id": "growth", "name": "Growth", "maxProducts": 5000, "maxConversations": 3000, "maxLanguages": 3, "priceMonthly": null },
+    { "id": "scale", "name": "Scale", "maxProducts": 50000, "maxConversations": 20000, "maxLanguages": 10, "priceMonthly": null }
+  ],
+  "models": [
+    { "id": "claude", "label": "Claude", "costPerAnswer": null },
+    { "id": "gpt", "label": "GPT", "costPerAnswer": null },
+    { "id": "gemini", "label": "Gemini", "costPerAnswer": null },
+    { "id": "deepseek", "label": "DeepSeek", "costPerAnswer": null }
+  ],
+  "shopDiscounts": []
+}

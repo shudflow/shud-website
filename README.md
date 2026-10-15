@@ -35,3 +35,17 @@ npm run preview    # serve dist/ locally
 Target address: `https://plan.shudflow.com` (set in `astro.config.mjs` and `src/content.json`).
 `public/CNAME` is there for GitHub Pages. To go live: add a DNS `CNAME` record `plan` → `shudflow.github.io` at the registrar and enable Pages for this repo.
 The root `shudflow.com` already serves a different site and is not touched.
+
+## Price calculator
+
+`src/components/PriceCalculator.astro` shows the package that fits a shop and the monthly price per shop. Put it on a page with `<PriceCalculator contactHref="#contact" />` (`contactHref` is where "Talk to us" points; default `#links`).
+
+All numbers live in `src/pricing.json`; the logic in `src/lib/pricing.ts` has none. Change the file, rebuild, and the result changes. A malformed file fails the build.
+
+- Package: the first entry in `packages` (keep them from smallest to largest) whose `maxProducts`, `maxConversations` (per shop, per month) and `maxLanguages` all fit. Above the largest one: custom plan.
+- Price per shop: `(priceMonthly + conversations × answersPerConversation × costPerAnswer × (1 + markupPercent / 100)) × (1 − discountPercent / 100)`, where the discount is the largest `shopDiscounts` tier whose `minShops` is reached. Total = price per shop × shops.
+- Any figure the price needs that is `null` (not approved yet) → the package is still shown, with "Price after consultation" instead of a number.
+
+`costPerAnswer` per model comes from the provider table in shudflow/shud-ai-service#19; packages, limits and markup from shudflow/shud-platform#37. Until those are approved every price is `null`.
+
+Tests: `npm test`.

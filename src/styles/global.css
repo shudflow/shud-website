@@ -207,3 +207,42 @@ footer p { margin: 0 0 4px; }
 }
 
 .contact { margin: -8px 0 24px; font-size: 0.9375rem; }
+
+/* price calculator */
+.calc-form { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0 0 24px; }
+.calc-field { min-width: 0; }
+.calc-field label { display: block; margin: 0 0 6px; font-weight: 500; }
+.calc-field input,
+.calc-field select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+.calc-field input:focus-visible,
+.calc-field select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.calc-field input[aria-invalid='true'] { border-color: var(--progress); }
+.calc-hint, .calc-error { margin: 6px 0 0; font-size: 0.8125rem; }
+.calc-error { color: var(--progress); }
+.calc-result {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.calc-result p { margin: 0 0 6px; }
+.calc-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.calc-title { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
+.calc-price { font-size: 1.125rem; }
+.calc-total, .calc-note { font-size: 0.9375rem; }
+.calc-contact { margin-top: 12px; }
+.calc-result[data-state='invalid'] .calc-contact { display: none; }
+
+@media (min-width: 560px) {
+  .calc-form { grid-template-columns: 1fr 1fr; }
+}

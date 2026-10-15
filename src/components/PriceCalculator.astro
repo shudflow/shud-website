@@ -1,0 +1,134 @@
+---
+import rawPricing from '../pricing.json';
+import { calculate, describeResult, parsePricingConfig, type CalculatorInput } from '../lib/pricing';
+
+interface Props {
+  /** Where "talk to us" points; the main page decides. */
+  contactHref?: string;
+}
+
+const { contactHref = '#links' } = Astro.props;
+
+// A broken pricing.json fails the build here instead of showing wrong prices.
+const config = parsePricingConfig(rawPricing);
+
+const defaults: CalculatorInput = {
+  products: 500,
+  conversations: 500,
+  languages: 1,
+  shops: 1,
+  modelId: config.models[0].id,
+};
+const initial = describeResult(calculate(config, defaults));
+
+const numberFields = [
+  { id: 'products', label: 'Products in the catalog', hint: 'How many products the bot should know.' },
+  { id: 'conversations', label: 'Conversations per month', hint: 'Per shop, roughly.' },
+  { id: 'languages', label: 'Languages', hint: 'How many languages the bot answers in.' },
+  { id: 'shops', label: 'Shops', hint: 'How many shops you want to connect.' },
+] as const;
+---
+<section id="price-calculator" aria-labelledby="h-calc">
+  <h2 id="h-calc">Bot price calculator</h2>
+  <p class="muted note">Tell us about the shop: we show the package that fits and the monthly price per shop.</p>
+
+  <form class="calc-form" novalidate>
+    {numberFields.map((field) => (
+      <div class="calc-field">
+        <label for={`calc-${field.id}`}>{field.label}</label>
+        <input
+          id={`calc-${field.id}`}
+          name={field.id}
+          type="number"
+          inputmode="numeric"
+          min="1"
+          step="1"
+          required
+          value={defaults[field.id]}
+          aria-describedby={`calc-${field.id}-hint calc-${field.id}-error`}
+        />
+        <p id={`calc-${field.id}-hint`} class="calc-hint muted">{field.hint}</p>
+        <p id={`calc-${field.id}-error`} class="calc-error" role="alert" hidden></p>
+      </div>
+    ))}
+    <div class="calc-field">
+      <label for="calc-modelId">AI model</label>
+      <select id="calc-modelId" name="modelId" aria-describedby="calc-modelId-hint calc-modelId-error">
+        {config.models.map((model) => (
+          <option value={model.id} selected={model.id === defaults.modelId}>{model.label}</option>
+        ))}
+      </select>
+      <p id="calc-modelId-hint" class="calc-hint muted">The model answers your shoppers; its price is part of the tariff.</p>
+      <p id="calc-modelId-error" class="calc-error" role="alert" hidden></p>
+    </div>
+  </form>
+
+  <div class="calc-result" data-state={initial.state} aria-live="polite" aria-atomic="true">
+    <p class="calc-label mono muted" data-part="label">Recommended package</p>
+    <p class="calc-title" data-part="title">{initial.title}</p>
+    <p class="calc-price" data-part="price">{initial.price}</p>
+    <p class="calc-total muted" data-part="total" hidden={initial.total === ''}>{initial.total}</p>
+    <p class="calc-note muted" data-part="note" hidden={initial.note === ''}>{initial.note}</p>
+    <p class="calc-contact"><a href={contactHref}>Talk to us <span aria-hidden="true">→</span></a></p>
+  </div>
+
+  <script>
+    import rawPricing from '../pricing.json';
+    import { calculate, describeResult, parsePricingConfig, type CalculatorInput, type InputField } from '../lib/pricing';
+
+    const config = parsePricingConfig(rawPricing);
+    const root = document.getElementById('price-calculator');
+    const form = root?.querySelector<HTMLFormElement>('.calc-form');
+    const result = root?.querySelector<HTMLElement>('.calc-result');
+
+    if (root && form && result) {
+      const fields: InputField[] = ['products', 'conversations', 'languages', 'shops', 'modelId'];
+
+      const read = (): CalculatorInput => {
+        const value = (name: InputField) => (form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement).value;
+        // An empty box must not count as 0 and a typo must not count as a number: both become NaN = invalid.
+        const num = (name: InputField) => (value(name).trim() === '' ? Number.NaN : Number(value(name)));
+        return {
+          products: num('products'),
+          conversations: num('conversations'),
+          languages: num('languages'),
+          shops: num('shops'),
+          modelId: value('modelId'),
+        };
+      };
+
+      const part = (name: string) => result.querySelector<HTMLElement>(`[data-part="${name}"]`)!;
+      const setText = (name: string, text: string) => {
+        const el = part(name);
+        el.textContent = text;
+        el.hidden = text === '';
+      };
+
+      const update = () => {
+        const outcome = calculate(config, read());
+        const view = describeResult(outcome);
+        const errors = outcome.kind === 'invalid' ? outcome.errors : {};
+
+        for (const name of fields) {
+          const input = form.elements.namedItem(name) as HTMLElement;
+          const error = root.querySelector<HTMLElement>(`#calc-${name}-error`)!;
+          const message = errors[name] ?? '';
+          error.textContent = message;
+          error.hidden = message === '';
+          input.setAttribute('aria-invalid', message === '' ? 'false' : 'true');
+        }
+
+        result.dataset.state = view.state;
+        setText('title', view.title);
+        setText('price', view.price);
+        setText('total', view.total);
+        setText('note', view.note);
+        part('label').hidden = view.state !== 'package';
+      };
+
+      form.addEventListener('input', update);
+      form.addEventListener('change', update);
+      form.addEventListener('submit', (event) => event.preventDefault());
+    }
+  </script>
+</section>
