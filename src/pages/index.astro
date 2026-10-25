@@ -2,7 +2,7 @@
 import content from '../content.json';
 import '../styles/global.css';
 
-const { meta, nav, hero, status, decisions, team, links, footer } = content;
+const { meta, nav, hero, status, team, links, footer } = content;
 const stateLabel = { done: 'Done', progress: 'In progress', planned: 'Planned' } as const;
 ---
 <!doctype html>
@@ -72,18 +72,6 @@ const stateLabel = { done: 'Done', progress: 'In progress', planned: 'Planned' }
                   <strong>{it.title}</strong>
                   {it.text && <span class="muted"> {it.text}</span>}
                 </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section id="decisions" aria-labelledby="h-decisions">
-          <h2 id="h-decisions">Open decisions</h2>
-          <ul class="rows">
-            {decisions.items.map((it) => (
-              <li>
-                <span class="badge mono open">Open</span>
-                <span class="row-body"><strong>{it.title}</strong> <span class="muted">{it.text}</span></span>
               </li>
             ))}
           </ul>

@@ -10,10 +10,6 @@
       "href": "#status"
     },
     {
-      "label": "Decisions",
-      "href": "#decisions"
-    },
-    {
       "label": "Team",
       "href": "#team"
     },
@@ -25,8 +21,8 @@
   ],
   "hero": {
     "title": "AI product advisor for online shops outside Shopify",
-    "subtitle": "A shop owner signs up, tunes the bot (tone, language, look), sees the price and embeds a single widget. Shoppers ask in their own language and get products from the shop's real catalog.",
-    "context": "CEE e-commerce · Prom.ua, Rozetka, custom sites · 2026",
+    "subtitle": "A shop owner signs up, uploads the catalog, tunes the bot (tone, language, look) and embeds a single widget. Shoppers get answers in the shop's language with products from the shop's real catalog.",
+    "context": "CEE e-commerce · own sites, Tilda, plain HTML · 2026",
     "flow": [
       "question",
       "catalog search",
@@ -36,17 +32,27 @@
     ]
   },
   "status": {
-    "date": "8 Oct 2026",
+    "date": "25 Oct 2026",
     "items": [
       {
         "state": "done",
         "title": "AI service",
-        "text": "FastAPI, Claude, vector search over product embeddings; a fast or a stronger model is picked per question."
+        "text": "FastAPI, Claude, vector search over product embeddings."
       },
       {
         "state": "done",
         "title": "Answer checking",
-        "text": "A recommended product must exist in the catalog. 10 of 10 test scenarios without invented products; 26 tests."
+        "text": "A recommended product must exist in the catalog, and products over the shopper's stated budget are dropped. 10 of 10 test scenarios without invented products; 52 tests."
+      },
+      {
+        "state": "done",
+        "title": "Answer records",
+        "text": "Each answer records its outcome, model, token use and latency; the dashboard keeps them."
+      },
+      {
+        "state": "done",
+        "title": "Checks on every pull request",
+        "text": "Lint, type checks and tests run in CI before anything is merged."
       },
       {
         "state": "done",
@@ -54,35 +60,29 @@
         "text": "Every push to main builds and publishes the container image."
       },
       {
-        "state": "progress",
-        "title": "AI connected to the platform",
-        "text": "Welcome message and escalation to a human."
+        "state": "done",
+        "title": "Own sign-in and dashboard",
+        "text": "Google sign-in, our own sessions, a read-only demo shop, team invitations."
+      },
+      {
+        "state": "done",
+        "title": "Analytics",
+        "text": "Visits and the sign-up funnel on self-hosted Umami, no third-party trackers."
       },
       {
         "state": "progress",
-        "title": "Own sign-in and dashboard",
-        "text": "Google sign-in, sessions, team invitations. The design document is in review."
+        "title": "Sign-in with email and password",
+        "text": "In review."
+      },
+      {
+        "state": "progress",
+        "title": "First release",
+        "text": "After a joint manual test session."
       },
       {
         "state": "planned",
-        "title": "Visit analytics, voice channel, answer styles for sk / pl / cs",
+        "title": "Model choice for shops, answers in the shopper's language, streaming answers",
         "text": ""
-      }
-    ]
-  },
-  "decisions": {
-    "items": [
-      {
-        "title": "Keycloak",
-        "text": "Keep it only for platform operators, or remove it completely?"
-      },
-      {
-        "title": "Models for shop owners",
-        "text": "Which models are available to shop owners?"
-      },
-      {
-        "title": "Service image",
-        "text": "Does the service image stay private?"
       }
     ]
   },
@@ -111,8 +111,8 @@
         "private": true
       },
       {
-        "label": "shudflow/ai-service",
-        "href": "https://github.com/shudflow/ai-service",
+        "label": "shudflow/shud-ai-service",
+        "href": "https://github.com/shudflow/shud-ai-service",
         "private": true
       },
       {
@@ -132,7 +132,7 @@
     }
   },
   "footer": {
-    "access": "Built in the open by the Shudflow team.",
+    "access": "Built by the Shudflow team.",
     "company": "Shudflow · Bratislava"
   }
 }
