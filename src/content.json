@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "title": "Shudflow — AI product advisor for online shops",
+    "description": "AI product advisor for online shops outside Shopify: register, tune the bot, embed one widget.",
+    "url": "https://plan.shudflow.com"
+  },
+  "nav": [
+    {
+      "label": "Status",
+      "href": "#status"
+    },
+    {
+      "label": "Team",
+      "href": "#team"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/shudflow",
+      "external": true
+    }
+  ],
+  "hero": {
+    "title": "AI product advisor for online shops outside Shopify",
+    "subtitle": "A shop owner signs up, uploads the catalog, tunes the bot (tone, language, look) and embeds a single widget. Shoppers get answers in the shop's language with products from the shop's real catalog.",
+    "context": "CEE e-commerce · own sites, Tilda, plain HTML · 2026",
+    "flow": [
+      "question",
+      "catalog search",
+      "model",
+      "checked answer",
+      "widget"
+    ]
+  },
+  "status": {
+    "date": "25 Oct 2026",
+    "items": [
+      {
+        "state": "done",
+        "title": "AI service",
+        "text": "FastAPI, Claude, vector search over product embeddings."
+      },
+      {
+        "state": "done",
+        "title": "Answer checking",
+        "text": "A recommended product must exist in the catalog, and products over the shopper's stated budget are dropped. 10 of 10 test scenarios without invented products; 52 tests."
+      },
+      {
+        "state": "done",
+        "title": "Answer records",
+        "text": "Each answer records its outcome, model, token use and latency; the dashboard keeps them."
+      },
+      {
+        "state": "done",
+        "title": "Checks on every pull request",
+        "text": "Lint, type checks and tests run in CI before anything is merged."
+      },
+      {
+        "state": "done",
+        "title": "Service image published from GitHub",
+        "text": "Every push to main builds and publishes the container image."
+      },
+      {
+        "state": "done",
+        "title": "Own sign-in and dashboard",
+        "text": "Google sign-in, our own sessions, a read-only demo shop, team invitations."
+      },
+      {
+        "state": "done",
+        "title": "Analytics",
+        "text": "Visits and the sign-up funnel on self-hosted Umami, no third-party trackers."
+      },
+      {
+        "state": "progress",
+        "title": "Sign-in with email and password",
+        "text": "In review."
+      },
+      {
+        "state": "progress",
+        "title": "First release",
+        "text": "After a joint manual test session."
+      },
+      {
+        "state": "planned",
+        "title": "Model choice for shops, answers in the shopper's language, streaming answers",
+        "text": ""
+      }
+    ]
+  },
+  "team": {
+    "items": [
+      {
+        "name": "Vladyslav Shudiehov",
+        "role": "AI service, sign-in and dashboard"
+      },
+      {
+        "name": "Daniil Statsenko",
+        "role": "Backend, frontend, infrastructure"
+      }
+    ]
+  },
+  "links": {
+    "note": "Repositories marked private return a 404 to anyone outside the team.",
+    "items": [
+      {
+        "label": "shudflow.com",
+        "href": "https://shudflow.com"
+      },
+      {
+        "label": "github.com/shudflow",
+        "href": "https://github.com/shudflow",
+        "private": true
+      },
+      {
+        "label": "shudflow/shud-ai-service",
+        "href": "https://github.com/shudflow/shud-ai-service",
+        "private": true
+      },
+      {
+        "label": "shudflow/shud-platform",
+        "href": "https://github.com/shudflow/shud-platform",
+        "private": true
+      },
+      {
+        "label": "Shudflow Tasks",
+        "href": "https://github.com/orgs/shudflow/projects/1",
+        "private": true
+      }
+    ],
+    "contact": {
+      "label": "hello@shudflow.com",
+      "href": "mailto:hello@shudflow.com"
+    }
+  },
+  "footer": {
+    "access": "Built by the Shudflow team.",
+    "company": "Shudflow · Bratislava"
+  }
+}
